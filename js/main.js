@@ -6,7 +6,17 @@
 document.addEventListener('DOMContentLoaded', () => {
   initStickyNavbar();
   initScrollReveal();
-  initPortfolioFilter();
+  
+  // If we are on the projects page, load projects first
+  const grid = document.getElementById('portfolio-items-grid');
+  if (grid) {
+    loadDynamicProjects().then(() => {
+      initPortfolioFilter();
+    });
+  } else {
+    initPortfolioFilter();
+  }
+
   initSmoothScrollWithOffset();
   initContactForm();
   initActiveNavLinkOnScroll();
@@ -113,6 +123,16 @@ function initPortfolioFilter() {
             item.classList.add('hidden');
           }
         }, 300);
+      });
+
+      // Update visibility of corresponding Load More buttons
+      const loadMoreButtons = document.querySelectorAll('.load-more-btn');
+      loadMoreButtons.forEach(btn => {
+        if (btn.getAttribute('data-load-more') === filterValue) {
+          btn.classList.remove('d-none');
+        } else {
+          btn.classList.add('d-none');
+        }
       });
     });
   });
@@ -305,3 +325,130 @@ function initTestimonialCarouselSync() {
   });
 }
 
+/**
+ * 8. Load Projects Dynamically from Sanity
+ */
+async function loadDynamicProjects() {
+  const grid = document.getElementById('portfolio-items-grid');
+  if (!grid) return;
+
+  try {
+    // Sanity API Configuration
+    const projectId = 'ndfok895';
+    const dataset = 'production';
+    const query = encodeURIComponent('*[_type == "project"]{title, category, categoryLabel, mediaType, "mediaSrc": media.asset->url}');
+    const sanityUrl = `https://${projectId}.api.sanity.io/v2023-01-01/data/query/${dataset}?query=${query}`;
+
+    const response = await fetch(sanityUrl);
+    if (!response.ok) throw new Error('Failed to load projects from Sanity');
+    
+    const data = await response.json();
+    const projects = data.result || [];
+    
+    grid.innerHTML = ''; // Clear loading state
+    
+    if (projects.length === 0) {
+      grid.innerHTML = '<p class="text-center text-white w-100">No projects found. Add some in your Sanity Studio!</p>';
+      return;
+    }
+    
+    projects.forEach((proj, index) => {
+      const colDiv = document.createElement('div');
+      colDiv.className = `col-sm-6 col-lg-4 portfolio-item ${proj.category || 'all'}`;
+      
+      const cardDiv = document.createElement('div');
+      cardDiv.className = 'project-card';
+      cardDiv.id = `project-${index + 1}`;
+      
+      let mediaHtml = '';
+      if (proj.mediaType === 'video') {
+        mediaHtml = `
+          <video autoplay muted loop playsinline class="project-img">
+            <source src="${proj.mediaSrc}" type="video/mp4">
+          </video>
+        `;
+      } else {
+        mediaHtml = `<img src="${proj.mediaSrc}" alt="${proj.title}" class="project-img img-fluid">`;
+      }
+      
+      cardDiv.innerHTML = `
+        ${mediaHtml}
+        <div class="project-overlay">
+          <span class="project-category">${proj.categoryLabel || proj.category || ''}</span>
+          <h4 class="project-title">${proj.title || 'Untitled'}</h4>
+        </div>
+      `;
+      
+      colDiv.appendChild(cardDiv);
+      grid.appendChild(colDiv);
+    });
+    
+  } catch (error) {
+    console.error('Error loading projects:', error);
+    grid.innerHTML = '<p class="text-center text-white w-100">Failed to load projects. Please try again later.</p>';
+  }
+}
+
+/**
+ * 9. Load Transformations Dynamically from Sanity
+ */
+async function loadDynamicTransformations() {
+  const grid = document.getElementById('transformations-grid');
+  if (!grid) return;
+
+  try {
+    const projectId = 'ndfok895';
+    const dataset = 'production';
+    const query = encodeURIComponent('*[_type == "transformation"]{title, description, "beforeSrc": beforeImage.asset->url, "afterSrc": afterImage.asset->url}');
+    const sanityUrl = `https://${projectId}.api.sanity.io/v2023-01-01/data/query/${dataset}?query=${query}`;
+
+    const response = await fetch(sanityUrl);
+    if (!response.ok) throw new Error('Failed to load transformations from Sanity');
+    
+    const data = await response.json();
+    const transformations = data.result || [];
+    
+    grid.innerHTML = '';
+    
+    if (transformations.length === 0) {
+      grid.innerHTML = '<p class="text-center w-100" style="color: var(--dark);">No transformations found. Add some in your Sanity Studio!</p>';
+      return;
+    }
+    
+    transformations.forEach((item) => {
+      const colDiv = document.createElement('div');
+      colDiv.className = 'col-lg-4 col-md-6';
+      
+      const cardHtml = `
+        <div class="transformation-card">
+          <div class="transformation-images">
+            <div class="before-img-wrapper">
+              <img src="${item.beforeSrc}" alt="${item.title} Before" class="img-fluid">
+              <span class="badge-before">Before</span>
+            </div>
+            <div class="after-img-wrapper">
+              <img src="${item.afterSrc}" alt="${item.title} After" class="img-fluid">
+              <span class="badge-after">After</span>
+            </div>
+          </div>
+          <div class="transformation-details">
+            <h4>${item.title || 'Untitled'}</h4>
+            <p>${item.description || ''}</p>
+          </div>
+        </div>
+      `;
+      
+      colDiv.innerHTML = cardHtml;
+      grid.appendChild(colDiv);
+    });
+    
+  } catch (error) {
+    console.error('Error loading transformations:', error);
+    grid.innerHTML = '<p class="text-center w-100" style="color: var(--dark);">Failed to load transformations. Please try again later.</p>';
+  }
+}
+
+// Ensure the new function is called on load
+document.addEventListener('DOMContentLoaded', () => {
+  loadDynamicTransformations();
+});

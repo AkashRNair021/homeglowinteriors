@@ -1,0 +1,67 @@
+{
+  "items": [
+    {
+      "title": "Elegant Warm Living Room",
+      "category": "living-rooms",
+      "categoryLabel": "Living Rooms",
+      "mediaType": "video",
+      "mediaSrc": "images/project_living_aquarium.mp4"
+    },
+    {
+      "title": "Master Oasis Bedroom",
+      "category": "bedrooms",
+      "categoryLabel": "Bedrooms",
+      "mediaType": "video",
+      "mediaSrc": "images/bedroom_hg.mp4"
+    },
+    {
+      "title": "Chef's Dream Kitchen",
+      "category": "kitchens",
+      "categoryLabel": "Modular Kitchens",
+      "mediaType": "video",
+      "mediaSrc": "images/kitchen_hg.mp4"
+    },
+    {
+      "title": "Modern Foyer Partition",
+      "category": "living-rooms",
+      "categoryLabel": "Living Rooms",
+      "mediaType": "video",
+      "mediaSrc": "images/project_foyer_partition.mp4"
+    },
+    {
+      "title": "Luxury Custom Bathroom",
+      "category": "bathrooms",
+      "categoryLabel": "Bathroom Settings",
+      "mediaType": "video",
+      "mediaSrc": "images/bathroom_hg.mp4"
+    },
+    {
+      "title": "Serene Outdoor Patio",
+      "category": "outdoor",
+      "categoryLabel": "Outdoor Spaces",
+      "mediaType": "video",
+      "mediaSrc": "images/project_outdoor_garden.mp4"
+    },
+    {
+      "title": "Sophisticated Dining Transformation",
+      "category": "renovations",
+      "categoryLabel": "Renovation Projects",
+      "mediaType": "video",
+      "mediaSrc": "images/project_dining_room.mp4"
+    },
+    {
+      "title": "Premium TV Wall Unit",
+      "category": "living-rooms",
+      "categoryLabel": "Living Rooms",
+      "mediaType": "video",
+      "mediaSrc": "images/project_staircase_tv.mp4"
+    },
+    {
+      "title": "Premium Warm Living Room",
+      "category": "living-rooms",
+      "categoryLabel": "Living Rooms",
+      "mediaType": "video",
+      "mediaSrc": "images/project_living_warm.mp4"
+    }
+  ]
+}

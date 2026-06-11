@@ -1,0 +1,22 @@
+{
+  "items": [
+    {
+      "title": "Dining Room Partition",
+      "description": "Created a custom wooden screen partition with built-in decorative shelves, separating the dining area and kitchen while maintaining light flow.",
+      "beforeImageSrc": "images/before_partition.jpg",
+      "afterImageSrc": "images/after_partition.jpg"
+    },
+    {
+      "title": "Staircase TV Wall Unit",
+      "description": "Transformed a bare wall next to the staircase into a high-end entertainment center featuring custom marble cladding, wood slats, and floating cabinets.",
+      "beforeImageSrc": "images/before_tv.jpg",
+      "afterImageSrc": "images/after_tv.jpg"
+    },
+    {
+      "title": "Bespoke Wardrobe & Dressing",
+      "description": "Turned a blank bedroom wall into a sleek, floor-to-ceiling white lacquer wardrobe integrated with a custom vanity table, mirror, and drawers.",
+      "beforeImageSrc": "images/before_wardrobe.jpg",
+      "afterImageSrc": "images/after_wardrobe.jpg"
+    }
+  ]
+}
