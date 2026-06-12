@@ -9,10 +9,16 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // If we are on the projects page, load projects first
   const grid = document.getElementById('portfolio-items-grid');
+  const isProjectsPage = window.location.pathname.toLowerCase().includes('projects');
+  
   if (grid) {
-    loadDynamicProjects().then(() => {
+    if (isProjectsPage) {
+      loadDynamicProjects().then(() => {
+        initPortfolioFilter();
+      });
+    } else {
       initPortfolioFilter();
-    });
+    }
   } else {
     initPortfolioFilter();
   }
