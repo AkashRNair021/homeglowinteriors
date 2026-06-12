@@ -7,18 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initStickyNavbar();
   initScrollReveal();
   
-  // If we are on the projects page, load projects first
   const grid = document.getElementById('portfolio-items-grid');
-  const isProjectsPage = window.location.pathname.toLowerCase().includes('projects');
   
   if (grid) {
-    if (isProjectsPage) {
-      loadDynamicProjects().then(() => {
-        initPortfolioFilter();
-      });
-    } else {
+    loadDynamicProjects().then(() => {
       initPortfolioFilter();
-    }
+    });
   } else {
     initPortfolioFilter();
   }
@@ -112,14 +106,26 @@ function initPortfolioFilter() {
 
       // 2. Filter items
       const filterValue = button.getAttribute('data-filter');
+      const isHomePage = window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || !window.location.pathname.includes('.html');
+      let visibleCount = 0;
 
       portfolioItems.forEach(item => {
         // We add a fade transition effect
         item.style.opacity = '0';
         item.style.transform = 'scale(0.9) translateY(15px)';
         
+        const matchesFilter = filterValue === 'all' || item.classList.contains(filterValue);
+        let shouldShow = false;
+        
+        if (matchesFilter) {
+          if (!isHomePage || visibleCount < 9) {
+            shouldShow = true;
+            visibleCount++;
+          }
+        }
+        
         setTimeout(() => {
-          if (filterValue === 'all' || item.classList.contains(filterValue)) {
+          if (shouldShow) {
             item.classList.remove('hidden');
             setTimeout(() => {
               item.style.opacity = '1';
@@ -342,14 +348,40 @@ async function loadDynamicProjects() {
     // Sanity API Configuration
     const projectId = 'ndfok895';
     const dataset = 'production';
-    const query = encodeURIComponent('*[_type == "project"]{title, category, categoryLabel, mediaType, "mediaSrc": media.asset->url}');
-    const sanityUrl = `https://${projectId}.api.sanity.io/v2023-01-01/data/query/${dataset}?query=${query}`;
+    const projectsQuery = encodeURIComponent('*[_type == "project"]{title, category, categoryLabel, mediaType, "mediaSrc": media.asset->url}');
+    const projectsUrl = `https://${projectId}.api.sanity.io/v2023-01-01/data/query/${dataset}?query=${projectsQuery}`;
 
-    const response = await fetch(sanityUrl);
-    if (!response.ok) throw new Error('Failed to load projects from Sanity');
+    const transformsQuery = encodeURIComponent('*[_type == "transformation"]{title, "afterSrc": afterImage.asset->url}');
+    const transformsUrl = `https://${projectId}.api.sanity.io/v2023-01-01/data/query/${dataset}?query=${transformsQuery}`;
+
+    const [projectsRes, transformsRes] = await Promise.all([
+      fetch(projectsUrl),
+      fetch(transformsUrl)
+    ]);
     
-    const data = await response.json();
-    const projects = data.result || [];
+    if (!projectsRes.ok || !transformsRes.ok) throw new Error('Failed to load data from Sanity');
+    
+    const projectsData = await projectsRes.json();
+    const transformsData = await transformsRes.json();
+    
+    const fetchedProjects = (projectsData.result || []).map(p => {
+      if (p.category === 'tv-units' || p.category === 'wardrobes') {
+        p.category = 'furniture';
+      }
+      return p;
+    });
+    const transformations = transformsData.result || [];
+    
+    // Map transformations to the projects format
+    const transformedProjects = transformations.map(t => ({
+      title: t.title ? `${t.title} (Transformation)` : 'Transformation',
+      category: 'renovations',
+      categoryLabel: 'Renovations',
+      mediaType: 'image',
+      mediaSrc: t.afterSrc
+    }));
+    
+    const projects = [...fetchedProjects, ...transformedProjects];
     
     grid.innerHTML = ''; // Clear loading state
     
@@ -421,9 +453,12 @@ async function loadDynamicTransformations() {
       return;
     }
     
-    transformations.forEach((item) => {
+    transformations.forEach((item, index) => {
       const colDiv = document.createElement('div');
-      colDiv.className = 'col-lg-4 col-md-6';
+      colDiv.className = 'col-lg-4 col-md-6 transformation-item';
+      if (index >= 3) {
+        colDiv.style.display = 'none';
+      }
       
       const cardHtml = `
         <div class="transformation-card">
@@ -447,6 +482,37 @@ async function loadDynamicTransformations() {
       colDiv.innerHTML = cardHtml;
       grid.appendChild(colDiv);
     });
+    
+    // Handle Load More & Load Less buttons
+    const loadMoreBtn = document.getElementById('load-more-transformations');
+    const loadLessBtn = document.getElementById('load-less-transformations');
+    
+    if (loadMoreBtn && loadLessBtn && transformations.length > 3) {
+      loadMoreBtn.style.display = 'inline-block';
+      loadLessBtn.style.display = 'none';
+      
+      loadMoreBtn.addEventListener('click', () => {
+        const items = grid.querySelectorAll('.transformation-item');
+        items.forEach(item => item.style.display = 'block');
+        loadMoreBtn.style.display = 'none';
+        loadLessBtn.style.display = 'inline-block';
+      });
+      
+      loadLessBtn.addEventListener('click', () => {
+        const items = grid.querySelectorAll('.transformation-item');
+        items.forEach((item, index) => {
+          if (index >= 3) item.style.display = 'none';
+        });
+        loadLessBtn.style.display = 'none';
+        loadMoreBtn.style.display = 'inline-block';
+        
+        // Scroll back up to the top of the section
+        document.getElementById('transformations').scrollIntoView({ behavior: 'smooth' });
+      });
+    } else {
+      if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+      if (loadLessBtn) loadLessBtn.style.display = 'none';
+    }
     
   } catch (error) {
     console.error('Error loading transformations:', error);

@@ -354,12 +354,12 @@
         <button class="filter-btn" data-filter="bedrooms" id="btn-filter-bedrooms">Bedrooms</button>
         <button class="filter-btn" data-filter="kitchens" id="btn-filter-kitchens">Modular Kitchens</button>
         <button class="filter-btn" data-filter="bathrooms" id="btn-filter-bathrooms">Bathroom Settings</button>
-        <button class="filter-btn" data-filter="outdoor" id="btn-filter-outdoor">Outdoor Spaces</button>
+        <button class="filter-btn" data-filter="exterior" id="btn-filter-exterior">Exterior</button>
+        <button class="filter-btn" data-filter="businesses" id="btn-filter-businesses">Businesses</button>
         <button class="filter-btn" data-filter="renovations" id="btn-filter-renovations">Renovation Projects</button>
         <button class="filter-btn" data-filter="dining-rooms">Dining Rooms</button>
         <button class="filter-btn" data-filter="foyers">Foyers</button>
-        <button class="filter-btn" data-filter="tv-units">TV Units</button>
-        <button class="filter-btn" data-filter="wardrobes">Wardrobes</button>
+        <button class="filter-btn" data-filter="furniture">Furniture</button>
       </div>
 
       <!-- Grid -->
@@ -431,13 +431,13 @@
         </div>
 
         <!-- Project 7: Outdoor -->
-        <div class="col-sm-6 col-lg-4 portfolio-item outdoor">
+        <div class="col-sm-6 col-lg-4 portfolio-item exterior">
           <div class="project-card" id="project-7">
             <video autoplay muted loop playsinline class="project-img">
               <source src="images/project_outdoor_garden.mp4" type="video/mp4">
             </video>
             <div class="project-overlay">
-              <span class="project-category">Outdoor Spaces</span>
+              <span class="project-category">Exterior</span>
               <h4 class="project-title">Serene Outdoor Patio</h4>
             </div>
           </div>
@@ -493,10 +493,18 @@
           id="btn-loadmore-kitchens">Load More Modular Kitchens</a>
         <a href="projects.html" class="btn-premium btn-premium-primary load-more-btn d-none" data-load-more="bathrooms"
           id="btn-loadmore-bathrooms">Load More Bathroom Settings</a>
-        <a href="projects.html" class="btn-premium btn-premium-primary load-more-btn d-none" data-load-more="outdoor"
-          id="btn-loadmore-outdoor">Load More Outdoor Spaces</a>
+        <a href="projects.html" class="btn-premium btn-premium-primary load-more-btn d-none" data-load-more="exterior"
+          id="btn-loadmore-exterior">Load More Exterior</a>
+        <a href="projects.html" class="btn-premium btn-premium-primary load-more-btn d-none" data-load-more="businesses"
+          id="btn-loadmore-businesses">Load More Businesses</a>
         <a href="projects.html" class="btn-premium btn-premium-primary load-more-btn d-none"
           data-load-more="renovations" id="btn-loadmore-renovations">Load More Renovation Projects</a>
+        <a href="projects.html" class="btn-premium btn-premium-primary load-more-btn d-none"
+          data-load-more="dining-rooms" id="btn-loadmore-dining-rooms">Load More Dining Rooms</a>
+        <a href="projects.html" class="btn-premium btn-premium-primary load-more-btn d-none"
+          data-load-more="foyers" id="btn-loadmore-foyers">Load More Foyers</a>
+        <a href="projects.html" class="btn-premium btn-premium-primary load-more-btn d-none"
+          data-load-more="furniture" id="btn-loadmore-furniture">Load More Furniture</a>
       </div>
     </div>
   </section>
@@ -517,7 +525,8 @@
       </div>
 
       <div class="text-center mt-5 reveal">
-        <a href="projects.html" class="btn-premium btn-premium-primary px-5 py-3">View More Transformations</a>
+        <button id="load-more-transformations" class="btn-premium btn-premium-primary px-5 py-3" style="display: none;">Load More</button>
+        <button id="load-less-transformations" class="btn-premium px-5 py-3" style="display: none; background-color: var(--dark); color: var(--light);">Show Less</button>
       </div>
     </div>
   </section>
@@ -1033,7 +1042,7 @@
           </div>
           <p class="footer-about-text mt-3">
             Designing elegant living spaces tailored with premium finishes, modern ergonomics, and thoughtful space
-            planning. "A Glow Up For Your Home" âœ¨
+            planning. "A Glow Up For Your Home" 
           </p>
           <div class="contact-socials mt-3" id="footer-socials-group">
             <a href="https://www.facebook.com/share/1KFksWyWsD/" target="_blank" class="contact-social-btn"
