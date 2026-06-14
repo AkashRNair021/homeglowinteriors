@@ -114,7 +114,12 @@ function initPortfolioFilter() {
         item.style.opacity = '0';
         item.style.transform = 'scale(0.9) translateY(15px)';
         
-        const matchesFilter = filterValue === 'all' || item.classList.contains(filterValue);
+        let matchesFilter = false;
+        if (filterValue === 'all') {
+          matchesFilter = item.classList.contains('type-video');
+        } else {
+          matchesFilter = item.classList.contains(filterValue);
+        }
         let shouldShow = false;
         
         if (matchesFilter) {
@@ -148,6 +153,12 @@ function initPortfolioFilter() {
       });
     });
   });
+
+  // Trigger the active filter to hide non-videos on load if 'all' is active
+  const activeBtn = document.querySelector('.filter-btn.active');
+  if (activeBtn) {
+    activeBtn.click();
+  }
 }
 
 /**
@@ -392,7 +403,7 @@ async function loadDynamicProjects() {
     
     projects.forEach((proj, index) => {
       const colDiv = document.createElement('div');
-      colDiv.className = `col-sm-6 col-lg-4 portfolio-item ${proj.category || 'all'}`;
+      colDiv.className = `col-sm-6 col-lg-4 portfolio-item ${proj.category || 'all'} type-${proj.mediaType || 'image'}`;
       
       const cardDiv = document.createElement('div');
       cardDiv.className = 'project-card';
