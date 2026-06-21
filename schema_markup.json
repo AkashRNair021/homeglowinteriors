@@ -1,0 +1,65 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "HomeAndConstructionBusiness",
+      "@id": "https://www.homeglowinteriors.com/#organization",
+      "name": "Home Glow Interiors & Builders",
+      "url": "https://www.homeglowinteriors.com",
+      "logo": "https://www.homeglowinteriors.com/images/logo.png",
+      "image": "https://www.homeglowinteriors.com/images/about_image.png",
+      "description": "Premium interior design, renovation, and construction services specializing in modular kitchens, custom furniture, and landscaping across Kerala.",
+      "telephone": "+918089058032",
+      "email": "homeglowinteriors24@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Thengamam",
+        "addressLocality": "Adoor",
+        "addressRegion": "Kerala",
+        "postalCode": "691523",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "9.1534",
+        "longitude": "76.7188"
+      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Pathanamthitta"
+        },
+        {
+          "@type": "City",
+          "name": "Adoor"
+        },
+        {
+          "@type": "City",
+          "name": "Kollam"
+        },
+        {
+          "@type": "City",
+          "name": "Alappuzha"
+        },
+        {
+          "@type": "City",
+          "name": "Pandalam"
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/share/1KFksWyWsD/",
+        "https://www.instagram.com/home.glow_interiors_builders"
+      ],
+      "priceRange": "$$"
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://www.homeglowinteriors.com/#website",
+      "url": "https://www.homeglowinteriors.com",
+      "name": "Home Glow Interiors & Builders",
+      "publisher": {
+        "@id": "https://www.homeglowinteriors.com/#organization"
+      }
+    }
+  ]
+}
