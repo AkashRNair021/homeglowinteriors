@@ -15,16 +15,15 @@ export default {
       type: 'string',
       options: {
         list: [
-          { title: 'Living Rooms', value: 'living-rooms' },
-          { title: 'Bedrooms', value: 'bedrooms' },
+          { title: 'Interiors', value: 'interiors' },
           { title: 'Modular Kitchens', value: 'kitchens' },
-          { title: 'Bathrooms', value: 'bathrooms' },
           { title: 'Landscape', value: 'landscape' },
           { title: 'Furniture (Wardrobes)', value: 'furniture' },
           { title: 'Exterior', value: 'exterior' },
           { title: 'Commercial Spaces', value: 'commercial' },
           { title: 'Businesses', value: 'businesses' },
           { title: 'Renovations', value: 'renovations' },
+          { title: 'Ceiling & Lights', value: 'ceiling' },
         ],
       },
       validation: (Rule) => Rule.required(),

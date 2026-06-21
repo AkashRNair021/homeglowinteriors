@@ -2,15 +2,15 @@
   "items": [
     {
       "title": "Elegant Warm Living Room",
-      "category": "living-rooms",
-      "categoryLabel": "Living Rooms",
+      "category": "interiors",
+      "categoryLabel": "Interiors",
       "mediaType": "video",
       "mediaSrc": "images/project_living_aquarium.mp4"
     },
     {
       "title": "Master Oasis Bedroom",
-      "category": "bedrooms",
-      "categoryLabel": "Bedrooms",
+      "category": "interiors",
+      "categoryLabel": "Interiors",
       "mediaType": "video",
       "mediaSrc": "images/bedroom_hg.mp4"
     },
@@ -23,15 +23,15 @@
     },
     {
       "title": "Modern Foyer Partition",
-      "category": "living-rooms",
-      "categoryLabel": "Living Rooms",
+      "category": "interiors",
+      "categoryLabel": "Interiors",
       "mediaType": "video",
       "mediaSrc": "images/project_foyer_partition.mp4"
     },
     {
       "title": "Luxury Custom Bathroom",
-      "category": "bathrooms",
-      "categoryLabel": "Bathroom Settings",
+      "category": "interiors",
+      "categoryLabel": "Interiors",
       "mediaType": "video",
       "mediaSrc": "images/bathroom_hg.mp4"
     },
@@ -51,15 +51,15 @@
     },
     {
       "title": "Premium TV Wall Unit",
-      "category": "living-rooms",
-      "categoryLabel": "Living Rooms",
+      "category": "interiors",
+      "categoryLabel": "Interiors",
       "mediaType": "video",
       "mediaSrc": "images/project_staircase_tv.mp4"
     },
     {
       "title": "Premium Warm Living Room",
-      "category": "living-rooms",
-      "categoryLabel": "Living Rooms",
+      "category": "interiors",
+      "categoryLabel": "Interiors",
       "mediaType": "video",
       "mediaSrc": "images/project_living_warm.mp4"
     }

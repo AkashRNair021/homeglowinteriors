@@ -381,6 +381,10 @@ async function loadDynamicProjects() {
       if (p.category === 'wardrobes') {
         p.category = 'furniture';
       }
+      if (['living-rooms', 'bedrooms', 'bathrooms', 'bathroom'].includes(p.category)) {
+        p.category = 'interiors';
+        p.categoryLabel = 'Interiors';
+      }
       return p;
     });
     const transformations = transformsData.result || [];
@@ -394,7 +398,62 @@ async function loadDynamicProjects() {
       mediaSrc: t.afterSrc
     }));
     
-    const projects = [...fetchedProjects, ...transformedProjects];
+    const exteriorAdditions = [
+      {
+        title: "Modern Exterior Facade",
+        category: "exterior",
+        categoryLabel: "Exterior",
+        mediaType: "image",
+        mediaSrc: "images/project_exterior_1.jpeg"
+      },
+      {
+        title: "Premium Elevation Design",
+        category: "exterior",
+        categoryLabel: "Exterior",
+        mediaType: "image",
+        mediaSrc: "images/project_exterior_2.jpeg"
+      },
+      {
+        title: "Luxury Home Exterior",
+        category: "exterior",
+        categoryLabel: "Exterior",
+        mediaType: "image",
+        mediaSrc: "images/project_exterior_3.jpeg"
+      },
+      {
+        title: "Contemporary Facade",
+        category: "exterior",
+        categoryLabel: "Exterior",
+        mediaType: "image",
+        mediaSrc: "images/project_exterior_4.jpeg"
+      },
+      {
+        title: "Elegant Villa Design",
+        category: "exterior",
+        categoryLabel: "Exterior",
+        mediaType: "image",
+        mediaSrc: "images/project_exterior_5.jpeg"
+      }
+    ];
+
+    const landscapeAdditions = [
+      {
+        title: "Lush Green Pathway",
+        category: "landscape",
+        categoryLabel: "Landscape",
+        mediaType: "image",
+        mediaSrc: "images/project_landscape_7.jpeg"
+      },
+      {
+        title: "Modern Outdoor Garden",
+        category: "landscape",
+        categoryLabel: "Landscape",
+        mediaType: "image",
+        mediaSrc: "images/project_landscape_8.jpeg"
+      }
+    ];
+    
+    const projects = [...fetchedProjects, ...transformedProjects, ...exteriorAdditions, ...landscapeAdditions];
     
     grid.innerHTML = ''; // Clear loading state
     
