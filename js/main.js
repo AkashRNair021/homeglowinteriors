@@ -433,6 +433,13 @@ async function loadDynamicProjects() {
         categoryLabel: "Exterior",
         mediaType: "image",
         mediaSrc: "images/project_exterior_5.jpeg"
+      },
+      {
+        title: "Premium Exterior Design",
+        category: "exterior",
+        categoryLabel: "Exterior",
+        mediaType: "image",
+        mediaSrc: "images/10.jpeg"
       }
     ];
 
@@ -452,8 +459,92 @@ async function loadDynamicProjects() {
         mediaSrc: "images/project_landscape_8.jpeg"
       }
     ];
+
+    const interiorAdditions = [
+      {
+        title: "Elegant Interior Styling",
+        category: "interiors",
+        categoryLabel: "Interiors",
+        mediaType: "image",
+        mediaSrc: "images/11.jpeg"
+      },
+      {
+        title: "Premium Living Space",
+        category: "interiors",
+        categoryLabel: "Interiors",
+        mediaType: "image",
+        mediaSrc: "images/12.jpeg"
+      },
+      {
+        title: "Modern Bathroom Interior",
+        category: "interiors",
+        categoryLabel: "Interiors",
+        mediaType: "image",
+        mediaSrc: "images/35.jpeg"
+      },
+      {
+        title: "Luxury Bathroom Setting",
+        category: "interiors",
+        categoryLabel: "Interiors",
+        mediaType: "image",
+        mediaSrc: "images/36.jpeg"
+      }
+    ];
+
+    const ceilingAdditions = [
+      {
+        title: "Modern Ceiling Light",
+        category: "ceiling",
+        categoryLabel: "Ceiling & Lights",
+        mediaType: "image",
+        mediaSrc: "images/13.jpeg"
+      },
+      {
+        title: "Elegant Cove Lighting",
+        category: "ceiling",
+        categoryLabel: "Ceiling & Lights",
+        mediaType: "image",
+        mediaSrc: "images/14.jpeg"
+      },
+      {
+        title: "Premium False Ceiling",
+        category: "ceiling",
+        categoryLabel: "Ceiling & Lights",
+        mediaType: "image",
+        mediaSrc: "images/15.jpeg"
+      },
+      {
+        title: "Luxury Gypsum Design",
+        category: "ceiling",
+        categoryLabel: "Ceiling & Lights",
+        mediaType: "image",
+        mediaSrc: "images/16.jpeg"
+      },
+      {
+        title: "Contemporary Ceiling Setup",
+        category: "ceiling",
+        categoryLabel: "Ceiling & Lights",
+        mediaType: "image",
+        mediaSrc: "images/17.jpeg"
+      }
+    ];
+
+    const businessAdditions = [
+      { title: "Premium Commercial Setup", category: "businesses", categoryLabel: "Businesses", mediaType: "image", mediaSrc: "images/19.jpeg" },
+      { title: "Modern Business Space", category: "businesses", categoryLabel: "Businesses", mediaType: "image", mediaSrc: "images/20.jpeg" },
+      { title: "Corporate Interior Design", category: "businesses", categoryLabel: "Businesses", mediaType: "image", mediaSrc: "images/21.jpeg" },
+      { title: "Elegant Office Environment", category: "businesses", categoryLabel: "Businesses", mediaType: "image", mediaSrc: "images/23.jpeg" },
+      { title: "Luxury Retail Space", category: "businesses", categoryLabel: "Businesses", mediaType: "image", mediaSrc: "images/24.jpeg" },
+      { title: "Creative Workspace", category: "businesses", categoryLabel: "Businesses", mediaType: "image", mediaSrc: "images/25.jpeg" },
+      { title: "Executive Business Lounge", category: "businesses", categoryLabel: "Businesses", mediaType: "image", mediaSrc: "images/26.jpeg" },
+      { title: "Modern Showroom", category: "businesses", categoryLabel: "Businesses", mediaType: "image", mediaSrc: "images/27.jpeg" },
+      { title: "Professional Corporate Layout", category: "businesses", categoryLabel: "Businesses", mediaType: "image", mediaSrc: "images/28.jpeg" },
+      { title: "Contemporary Business Hub", category: "businesses", categoryLabel: "Businesses", mediaType: "image", mediaSrc: "images/29.jpeg" },
+      { title: "Premium Office Interior", category: "businesses", categoryLabel: "Businesses", mediaType: "image", mediaSrc: "images/30.jpeg" },
+      { title: "Commercial Space Design", category: "businesses", categoryLabel: "Businesses", mediaType: "image", mediaSrc: "images/31.jpeg" }
+    ];
     
-    const projects = [...fetchedProjects, ...transformedProjects, ...exteriorAdditions, ...landscapeAdditions];
+    const projects = [...fetchedProjects, ...transformedProjects, ...exteriorAdditions, ...landscapeAdditions, ...interiorAdditions, ...ceilingAdditions, ...businessAdditions];
     
     grid.innerHTML = ''; // Clear loading state
     
