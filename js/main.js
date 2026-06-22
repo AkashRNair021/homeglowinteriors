@@ -603,11 +603,51 @@ async function loadDynamicTransformations() {
     const query = encodeURIComponent('*[_type == "transformation"]{title, description, "beforeSrc": beforeImage.asset->url, "afterSrc": afterImage.asset->url}');
     const sanityUrl = `https://${projectId}.api.sanity.io/v2023-01-01/data/query/${dataset}?query=${query}`;
 
-    const response = await fetch(sanityUrl);
-    if (!response.ok) throw new Error('Failed to load transformations from Sanity');
+    let fetchedTransformations = [];
+    try {
+      const response = await fetch(sanityUrl);
+      if (response.ok) {
+        const data = await response.json();
+        fetchedTransformations = data.result || [];
+      }
+    } catch (e) {
+      console.warn('Could not fetch from Sanity', e);
+    }
     
-    const data = await response.json();
-    const transformations = data.result || [];
+    const hardcodedTransformations = [
+      {
+        title: "Elegent wardobe setting",
+        description: "Transforming a traditional space into a vibrant, modern living area with elegant lighting and premium finishes.",
+        beforeSrc: "images/3.jpeg",
+        afterSrc: "images/4.jpeg"
+      },
+      {
+        title: "Modern Sanitary setting",
+        description: "A complete overhaul of the bedroom into a cozy, contemporary haven featuring custom wardrobes and soothing color palettes.",
+        beforeSrc: "images/5.jpeg",
+        afterSrc: "images/6.jpeg"
+      },
+      {
+        title: "living room make over",
+        description: "Reimagining the dining area with optimized layouts, sophisticated furniture, and a warm, inviting atmosphere.",
+        beforeSrc: "images/7.jpeg",
+        afterSrc: "images/8.jpeg"
+      },
+      {
+        title: "TV unit partitioning",
+        description: "Enhancing the exterior appeal with contemporary styling, premium materials, and architectural finesse.",
+        beforeSrc: "images/9.jpeg",
+        afterSrc: "images/10.jpeg"
+      },
+      {
+        title: "modular kitchen upgrade",
+        description: "Elevating the interior spaces with sophisticated design principles, premium fixtures, and a cohesive modern aesthetic.",
+        beforeSrc: "images/11.jpeg",
+        afterSrc: "images/12.jpeg"
+      }
+    ];
+
+    const transformations = [...fetchedTransformations, ...hardcodedTransformations];
     
     grid.innerHTML = '';
     
