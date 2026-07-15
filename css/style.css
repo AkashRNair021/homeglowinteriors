@@ -1749,3 +1749,22 @@ textarea.form-control-custom {
   color: var(--accent) !important;
 }
 
+/* --- Masonry Testimonials --- */
+.masonry-grid {
+  column-count: 3;
+  column-gap: 1.5rem;
+}
+.masonry-item {
+  break-inside: avoid;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 992px) {
+  .masonry-grid {
+    column-count: 2;
+  }
+}
+@media (max-width: 768px) {
+  .masonry-grid {
+    column-count: 1;
+  }
+}

@@ -815,69 +815,12 @@ async function loadDynamicTestimonials() {
       }
     });
     
-    // Handle View More button
+    // Handle View More button (it's now a link to testimonials.html)
     const loadMoreBtn = document.getElementById('btn-loadmore-testimonials');
-    const loadLessBtn = document.getElementById('btn-loadless-testimonials');
-    
     if (loadMoreBtn && testimonials.length > 3) {
       loadMoreBtn.style.display = 'inline-block';
-      loadMoreBtn.textContent = 'View All Reviews';
-      
-      loadMoreBtn.addEventListener('click', () => {
-        grid.classList.remove('carousel-inner');
-        grid.classList.add('row', 'g-4');
-        
-        const items = grid.querySelectorAll('.testimonial-item');
-        items.forEach(item => {
-          item.className = 'col-lg-4 col-md-6 testimonial-item';
-          const card = item.querySelector('.testimonial-card');
-          if (card) {
-            card.classList.remove('mx-auto');
-            card.style.maxWidth = 'none';
-            card.style.height = '100%';
-            card.style.display = 'flex';
-            card.style.flexDirection = 'column';
-          }
-        });
-        
-        const controls = document.querySelectorAll('.carousel-control-custom-prev, .carousel-control-custom-next, .testimonial-indicators');
-        controls.forEach(ctrl => ctrl.style.display = 'none');
-        
-        loadMoreBtn.style.display = 'none';
-        if (loadLessBtn) loadLessBtn.style.display = 'inline-block';
-      });
-
-      if (loadLessBtn) {
-        loadLessBtn.addEventListener('click', () => {
-          grid.classList.add('carousel-inner');
-          grid.classList.remove('row', 'g-4');
-          
-          const items = grid.querySelectorAll('.testimonial-item');
-          items.forEach((item, idx) => {
-            item.className = `carousel-item ${idx === 0 ? 'active' : ''} testimonial-item`;
-            const card = item.querySelector('.testimonial-card');
-            if (card) {
-              card.classList.add('mx-auto');
-              card.style.maxWidth = '800px';
-              card.style.height = '';
-              card.style.display = '';
-              card.style.flexDirection = '';
-            }
-          });
-          
-          const controls = document.querySelectorAll('.carousel-control-custom-prev, .carousel-control-custom-next, .testimonial-indicators');
-          controls.forEach(ctrl => ctrl.style.display = '');
-          
-          loadLessBtn.style.display = 'none';
-          loadMoreBtn.style.display = 'inline-block';
-
-          // Scroll back up to the testimonials section
-          document.getElementById('testimonials').scrollIntoView({ behavior: 'smooth' });
-        });
-      }
-    } else {
-      if (loadMoreBtn) loadMoreBtn.style.display = 'none';
-      if (loadLessBtn) loadLessBtn.style.display = 'none';
+    } else if (loadMoreBtn) {
+      loadMoreBtn.style.display = 'none';
     }
     
   } catch (error) {
@@ -886,8 +829,88 @@ async function loadDynamicTestimonials() {
   }
 }
 
+async function loadAllTestimonialsPage() {
+  const grid = document.getElementById('testimonials-grid-all');
+  if (!grid) return;
+
+  try {
+    const projectId = 'ndfok895';
+    const dataset = 'production';
+    const query = encodeURIComponent('*[_type == "testimonial"]{clientName, projectDetails, quote, rating}');
+    const sanityUrl = `https://${projectId}.api.sanity.io/v2023-01-01/data/query/${dataset}?query=${query}`;
+
+    const response = await fetch(sanityUrl);
+    let fetchedTestimonials = [];
+    if (response.ok) {
+      const data = await response.json();
+      fetchedTestimonials = data.result || [];
+    }
+    
+    const hardcodedTestimonials = [
+      { clientName: "Akhil S Kumar", projectDetails: "Electrical Drawing & Modular Kitchen, Adoor", quote: "Home Glow designed our modular kitchen and executed the electrical drawing with absolute precision. The switch placements and lighting layouts are highly practical, and the kitchen finish is outstanding.", rating: 5 },
+      { clientName: "RUGMA N S", projectDetails: "Modular Kitchen, Trivandrum", quote: "Extremely satisfied with the bedroom interiors and wardrobe setup. The design is space-saving, and the materials are of premium quality. Highly recommended!", rating: 5 },
+      { clientName: "Amrutha S", projectDetails: "Kitchen & Living Renovation, Pathanamthitta", quote: "Our old kitchen and living area was renovated into a stunning modern space. Home Glow managed the entire remodeling hassle-free, delivering top-quality finishes on time.", rating: 5 },
+      { clientName: "Harikandan S", projectDetails: "Landscaping, Kochi", quote: "They transformed our front courtyard and outdoor sit-out with spectacular landscaping. The stone pathways and garden lighting setup look completely serene.", rating: 5 },
+      { clientName: "Sujatha Kumari", projectDetails: "2D & 3D Drawing, Kollam", quote: "The 2D plans and realistic 3D visualizations helped us preview every corner of our home before the build started. Excellent design foresight and detail.", rating: 5 },
+      { clientName: "Anandha Krishnan", projectDetails: "Full Work House, Kottayam", quote: "Home Glow handled the complete house design and build from concept to handover. Their professionalism, premium materials, and craftsmanship are top-class.", rating: 5 },
+      { clientName: "Jayaraj", projectDetails: "Aluminium & Steel Fabrication, Adoor", quote: "The custom gate, boundary railings, and steel balcony pergola they fabricated are incredibly sturdy, sleek, and match the modern elevation beautifully.", rating: 5 },
+      { clientName: "Ajeesh Thomas", projectDetails: "Bathroom, Bedroom & Renovation, Pathanamthitta", quote: "Renovated our bedrooms, custom bathrooms, balcony sit-out, and added a modern TV unit next to the staircase. The quality of execution is outstanding.", rating: 5 }
+    ];
+    
+    const testimonials = [...hardcodedTestimonials, ...fetchedTestimonials];
+    grid.innerHTML = '';
+    
+    if (testimonials.length === 0) {
+      grid.innerHTML = '<p class="text-center w-100" style="color: var(--dark);">No testimonials found.</p>';
+      return;
+    }
+    
+    testimonials.forEach((item) => {
+      const colDiv = document.createElement('div');
+      colDiv.className = 'col-lg-4 col-md-6 testimonial-item';
+      
+      const nameParts = (item.clientName || 'Client').split(' ');
+      const initials = nameParts.length > 1 
+        ? (nameParts[0][0] + nameParts[1][0]).toUpperCase() 
+        : nameParts[0][0].toUpperCase();
+
+      let starsHtml = '';
+      const rating = item.rating || 5;
+      for (let i = 0; i < rating; i++) {
+        starsHtml += '<i class="bi bi-star-fill"></i> ';
+      }
+      
+      const cardHtml = `
+        <div class="testimonial-card" style="height: 100%; display: flex; flex-direction: column;">
+          <div class="testimonial-quote-icon">
+            <i class="bi bi-quote"></i>
+          </div>
+          <p class="testimonial-text">"${item.quote || ''}"</p>
+          <div class="testimonial-rating">
+            ${starsHtml}
+          </div>
+          <div class="d-flex flex-column align-items-center mt-auto pt-3">
+            <div class="testimonial-author-img d-flex align-items-center justify-content-center bg-secondary-color text-dark fw-bold">
+              ${initials}
+            </div>
+            <span class="testimonial-author-name">${item.clientName || ''}</span>
+            <span class="testimonial-author-role">${item.projectDetails || ''}</span>
+          </div>
+        </div>
+      `;
+      
+      colDiv.innerHTML = cardHtml;
+      grid.appendChild(colDiv);
+    });
+  } catch (error) {
+    console.error('Error loading testimonials page:', error);
+    grid.innerHTML = '<p class="text-center w-100" style="color: var(--dark);">Failed to load testimonials.</p>';
+  }
+}
+
 // Ensure the new function is called on load
 document.addEventListener('DOMContentLoaded', () => {
   loadDynamicTransformations();
   loadDynamicTestimonials();
+  loadAllTestimonialsPage();
 });
