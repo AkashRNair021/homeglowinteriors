@@ -791,7 +791,7 @@ async function loadDynamicTestimonials() {
           <div class="testimonial-rating">
             ${starsHtml}
           </div>
-          <div class="d-flex flex-column align-items-center mt-3">
+          <div class="d-flex flex-column align-items-center mt-auto pt-3">
             <div class="testimonial-author-img d-flex align-items-center justify-content-center bg-secondary-color text-dark fw-bold">
               ${initials}
             </div>
@@ -817,6 +817,7 @@ async function loadDynamicTestimonials() {
     
     // Handle View More button
     const loadMoreBtn = document.getElementById('btn-loadmore-testimonials');
+    const loadLessBtn = document.getElementById('btn-loadless-testimonials');
     
     if (loadMoreBtn && testimonials.length > 3) {
       loadMoreBtn.style.display = 'inline-block';
@@ -833,6 +834,9 @@ async function loadDynamicTestimonials() {
           if (card) {
             card.classList.remove('mx-auto');
             card.style.maxWidth = 'none';
+            card.style.height = '100%';
+            card.style.display = 'flex';
+            card.style.flexDirection = 'column';
           }
         });
         
@@ -840,9 +844,40 @@ async function loadDynamicTestimonials() {
         controls.forEach(ctrl => ctrl.style.display = 'none');
         
         loadMoreBtn.style.display = 'none';
+        if (loadLessBtn) loadLessBtn.style.display = 'inline-block';
       });
-    } else if (loadMoreBtn) {
-      loadMoreBtn.style.display = 'none';
+
+      if (loadLessBtn) {
+        loadLessBtn.addEventListener('click', () => {
+          grid.classList.add('carousel-inner');
+          grid.classList.remove('row', 'g-4');
+          
+          const items = grid.querySelectorAll('.testimonial-item');
+          items.forEach((item, idx) => {
+            item.className = `carousel-item ${idx === 0 ? 'active' : ''} testimonial-item`;
+            const card = item.querySelector('.testimonial-card');
+            if (card) {
+              card.classList.add('mx-auto');
+              card.style.maxWidth = '800px';
+              card.style.height = '';
+              card.style.display = '';
+              card.style.flexDirection = '';
+            }
+          });
+          
+          const controls = document.querySelectorAll('.carousel-control-custom-prev, .carousel-control-custom-next, .testimonial-indicators');
+          controls.forEach(ctrl => ctrl.style.display = '');
+          
+          loadLessBtn.style.display = 'none';
+          loadMoreBtn.style.display = 'inline-block';
+
+          // Scroll back up to the testimonials section
+          document.getElementById('testimonials').scrollIntoView({ behavior: 'smooth' });
+        });
+      }
+    } else {
+      if (loadMoreBtn) loadMoreBtn.style.display = 'none';
+      if (loadLessBtn) loadLessBtn.style.display = 'none';
     }
     
   } catch (error) {
